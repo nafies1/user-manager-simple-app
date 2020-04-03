@@ -1,20 +1,27 @@
-/** @format */
-
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import Navbar from "./components/Navbar";
-import Dashboard from './views/Dashboard'
-import Home from './views/Home'
-import './App.css'
+import Details from "./views/Details"
+import Dashboard from "./views/Dashboard";
+import Home from "./views/Home";
+import "./App.css";
+import { fetchUsers } from "./store/actionCreator";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchUsers());
+  }, [dispatch]);
+
   return (
     <Router>
       <Navbar />
-      {/* A <Switch> looks through its children <Route>s and
-          renders the first one that matches the current URL. */}
       <Switch>
-        <Route path='/details'>ini details</Route>
+        <Route exact path='/details/:i'>
+          <Details />
+        </Route>
         <Route path='/dashboard'>
           <Dashboard />
         </Route>

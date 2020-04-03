@@ -7,7 +7,10 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import { TableSortLabel } from "@material-ui/core";
+import { TableSortLabel, Button } from "@material-ui/core";
+import { useSelector, useDispatch } from "react-redux";
+import { setLocation, setOpenMaps } from "../store/actionCreator";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   table: {
@@ -15,19 +18,22 @@ const useStyles = makeStyles({
   }
 });
 
-export default function SimpleTable({ employees }) {
+export default function SimpleTable() {
   const classes = useStyles();
+  const users = useSelector(state => state.users)
+  const dispatch = useDispatch()
+  const history = useHistory()
   const [data, setData] = useState([]);
   const [direction, setDirection] = useState("asc");
   const [sortedBy, setSortedBy] = useState("no");
 
   useEffect(() => {
-    const newDatas = employees.map((data, i) => {
+    const newDatas = users.map((data, i) => {
       data.no = i + 1;
       return data;
     });
     setData(newDatas);
-  }, [employees]);
+  }, [users]);
   const columns = ["no", "name", "age", "company", "gender"];
 
   const sortDirection = (upDown, orderBy) => {
@@ -60,6 +66,19 @@ export default function SimpleTable({ employees }) {
     setData(datas);
   };
 
+  const viewLocation = (i) => {
+    const {longitude, latitude} = users[i]   
+    dispatch(setLocation({
+      lat: latitude,
+      lng: longitude
+    }))
+    dispatch(setOpenMaps(true))
+  }
+
+  const toDetails = (i) => {
+    history.push(`/details/${i}`)
+  }
+
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label='simple table'>
@@ -76,20 +95,18 @@ export default function SimpleTable({ employees }) {
                 </TableCell>
               );
             })}
-            {/* <TableCell>Name</TableCell>
-            <TableCell>Age</TableCell>
-            <TableCell>Company</TableCell>
-            <TableCell>Gender</TableCell> */}
+            <TableCell>Location</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((employee, i) => (
+          {data.map((user, i) => (
             <TableRow key={i}>
-              <TableCell>{employee.no}</TableCell>
-              <TableCell>{employee.name}</TableCell>
-              <TableCell>{employee.age}</TableCell>
-              <TableCell>{employee.company}</TableCell>
-              <TableCell>{employee.gender}</TableCell>
+              <TableCell>{user.no}</TableCell>
+              <TableCell className="pointer" onClick={() => toDetails(i)}>{user.name}</TableCell>
+              <TableCell>{user.age}</TableCell>
+              <TableCell>{user.company}</TableCell>
+              <TableCell>{user.gender}</TableCell>
+              <TableCell><Button onClick={() => viewLocation(i)}>View Location</Button></TableCell>
             </TableRow>
           ))}
         </TableBody>

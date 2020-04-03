@@ -1,5 +1,3 @@
-/** @format */
-
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -20,7 +18,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ButtonAppBar() {
+export default function Navbar() {
   const classes = useStyles();
   const history = useHistory();
 
@@ -32,11 +30,8 @@ export default function ButtonAppBar() {
     <div className={classes.root}>
       <AppBar position='static'>
         <Toolbar>
-          {/* <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon />
-          </IconButton> */}
           <Typography onClick={toHome} variant='h6' className={classes.title}>
-            <span className='pointer'>Employee Manager</span>
+            <span className='pointer'>Users Manager</span>
           </Typography>
           <Button component={Link} color='inherit' to='/'>
             Home
