@@ -5,9 +5,9 @@ require("firebase/firestore");
 
 // Initialize Cloud Firestore through Firebase
 firebase.initializeApp({
-    apiKey: "AIzaSyA5wJOGgzOKDOul8iUs3wfgquFB09Xs5CE",
-    authDomain: "employee-manager-by-nafi-b906c.firebaseapp.com",
-    projectId: "employee-manager-by-nafi-b906c"
+    apiKey: REACT_APP_API_KEY,
+    authDomain: REACT_APP_AUTH_DOMAIN,
+    projectId: REACT_APP_PROJECT_ID
   });
 
 const db = firebase.firestore();

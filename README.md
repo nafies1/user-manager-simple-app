@@ -2,6 +2,8 @@
 
 User Manager Simple App with React js
 
+Deployed URL : `https://employee-manager-by-nafi-b906c.firebaseapp.com`
+
 -------------
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
